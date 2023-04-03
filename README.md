@@ -254,15 +254,18 @@ kubectl get po
 ```
 This command retrieves a list of all pods in the current Kubernetes namespace, along with their current status, name, and other basic details.
 
-```kubectl describe po
+```
+kubectl describe po
 ```
 This command provides detailed information about a specific pod, including its current status, events, labels, and annotations.
 
-```kubectl logs pod-command-hello --follow
+```
+kubectl logs pod-command-hello --follow
 ```
 This command retrieves the logs of the pod named pod-command-hello and follows them in real-time. This is useful for monitoring the output of long-running processes or troubleshooting issues.
 
-```kubectl get po --selector="env=production" --show-labels
+```
+kubectl get po --selector="env=production" --show-labels
 ```
 This command retrieves a list of all pods in the current namespace that have a label with the key env and value production. 
 The --show-labels flag includes the labels as additional columns in the output, making it easy to identify pods with specific characteristics.
@@ -279,7 +282,8 @@ This command gracefully evicts all the pods running on the specified node node-n
 This is typically done before taking a node offline for maintenance or decommissioning.
 
 ```
-kubectl drain <node-name> --force```
+kubectl drain <node-name> --force
+```
 This command forcefully evicts all the pods running on the specified node node-name without waiting for them to gracefully terminate. 
 This is useful when the node is unresponsive or needs to be taken offline immediately.
 
