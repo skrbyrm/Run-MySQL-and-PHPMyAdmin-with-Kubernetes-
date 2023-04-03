@@ -60,11 +60,10 @@ To add machine IP addresses to the hosts file, run:
 ```
 echo $(hostname -I) $(hostname) | sudo tee -a /etc/hosts
 nano /etc/hosts
-34.28.27.218 master-ext
-34.123.67.28 worker-1
-35.202.103.123 worker-2
-3.235.237.91 <master>
-8.222.167.17 alibaba
+<vm-ip> master-ext
+<vm-ip> worker-1
+<vm-ip> worker-2
+<vm-ip> alibaba
 ```
 ### Set up Kubernetes runtime and enable forwarding features
 To configure Kubernetes runtime and enable forwarding features, run:
