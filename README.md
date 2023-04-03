@@ -243,6 +243,58 @@ If the join token is expired;
  kubeadm init phase upload-certs --upload-certs
 ```
 
+### Prepare nodes and some kubectl codes
+```
+kubectl apply -f filename.yaml
+```
+This command applies the configuration specified in the YAML file filename.yaml to the Kubernetes cluster. It creates or updates the resources defined in the file.
+
+```
+kubectl get po
+```
+This command retrieves a list of all pods in the current Kubernetes namespace, along with their current status, name, and other basic details.
+
+```kubectl describe po
+```
+This command provides detailed information about a specific pod, including its current status, events, labels, and annotations.
+
+```kubectl logs pod-command-hello --follow
+```
+This command retrieves the logs of the pod named pod-command-hello and follows them in real-time. This is useful for monitoring the output of long-running processes or troubleshooting issues.
+
+```kubectl get po --selector="env=production" --show-labels
+```
+This command retrieves a list of all pods in the current namespace that have a label with the key env and value production. 
+The --show-labels flag includes the labels as additional columns in the output, making it easy to identify pods with specific characteristics.
+
+```
+kubectl delete -f filename.yaml
+```
+This command deletes the resources defined in the YAML file filename.yaml from the Kubernetes cluster.
+
+```
+kubectl drain <node-name>
+```
+This command gracefully evicts all the pods running on the specified node node-name and prevents new pods from being scheduled on the node. 
+This is typically done before taking a node offline for maintenance or decommissioning.
+
+```
+kubectl drain <node-name> --force```
+This command forcefully evicts all the pods running on the specified node node-name without waiting for them to gracefully terminate. 
+This is useful when the node is unresponsive or needs to be taken offline immediately.
+
+```
+kubectl delete pod <pod-name> --force --grace-period=0
+```
+This command forcefully deletes the specified pod pod-name without waiting for it to gracefully terminate. 
+It sets the grace period to 0, which means that the pod is immediately terminated. This is useful when the pod is stuck in a terminating state and needs to be forcibly removed.
+
+```
+kubectl label nodes <node-name> node-role.kubernetes.io/worker=worker --overwrite
+```
+This command adds the label node-role.kubernetes.io/worker=worker to the specified node node-name, which is typically used to identify the node's role in the cluster. 
+The --overwrite flag indicates that any existing label with the same key should be overwritten.
+
 ## Deploy App( MySQL and Phpmyadmin) on cluster
 
 To run MySQL and PHPMyAdmin on an existing Kubernetes cluster, you will need to create the following YAML files:
