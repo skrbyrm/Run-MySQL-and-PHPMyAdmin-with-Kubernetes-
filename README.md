@@ -21,10 +21,6 @@ sudo apt-get purge kubeadm kubectl kubelet
 sudo apt-get autoremove
 ```
 ### Remove remaining configuration files
-To remove any remaining Kubernetes configuration files, run:
-```
-sudo rm -rf /etc/kubernetes
-```
 To remove any remaining Docker configuration files, run:
 ```
 sudo rm -rf /etc/containerd
