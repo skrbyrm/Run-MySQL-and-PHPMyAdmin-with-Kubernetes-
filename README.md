@@ -110,19 +110,27 @@ sudo sysctl --system
 Next, we install the required packages - curl, gnupg2, software-properties-common, apt-transport-https, and ca-certificates. 
 We also add the Docker repository, and install containerd.io.
 ```
-sudo apt install -y curl gnupg2 software-properties-common apt-transport-https ca-certificates
+sudo apt install -y curl gnupg software-properties-common apt-transport-https ca-certificates
 
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+sudo install -m 0755 -d /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+sudo chmod a+r /etc/apt/keyrings/docker.gpg
+
+echo \
+  "deb [arch="$(dpkg --print-architecture)" signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+  "$(. /etc/os-release && echo "$VERSION_CODENAME")" stable" | \
+  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 
 sudo apt update
-sudo apt install -y containerd.io
+sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 ```
 Then, we configure containerd by creating the /etc/containerd/config.toml file and restarting the containerd service.
 ```
 sudo su -
 mkdir -p /etc/containerd
-containerd config default>/etc/containerd/config.toml
+
+containerd config default | sudo tee /etc/containerd/config.toml >/dev/null 2>&1
+sudo sed -i 's/SystemdCgroup \= false/SystemdCgroup \= true/g' /etc/containerd/config.toml
 
 sudo systemctl restart containerd
 sudo systemctl enable containerd
